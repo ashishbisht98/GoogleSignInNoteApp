@@ -40,7 +40,7 @@ class MainActivity2 : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(user: User?) {
+fun Greeting(user: User) {
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -49,18 +49,14 @@ fun Greeting(user: User?) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (user != null) {
-                Text(
-                    text = " ${user.displayName}",
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontSize = 30.sp
-                )
-            }
+            Text(
+                text = "Hello, ${user.displayName}",
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineMedium,
+                fontSize = 30.sp
+            )
             Spacer(modifier = Modifier.height(10.dp))
-            if (user != null) {
-                Text(text = user.email)
-            }
+            Text(text = user.email)
         }
     }
 }

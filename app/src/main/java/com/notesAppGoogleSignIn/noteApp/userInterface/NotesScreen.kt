@@ -1,5 +1,6 @@
 package com.notesAppGoogleSignIn.noteApp.userInterface
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,7 +39,7 @@ fun NotesScreen(
     state: NoteState,
     navController: NavController,
     onEvent: (NotesEvent) -> Unit,
-    user: User
+    user: User,
 ) {
 
 
@@ -59,14 +60,16 @@ fun NotesScreen(
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.primary
                 )
+
                 Text(
-                    text = "Hello, ${user.displayName}",
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontSize = 30.sp
-                )
+                        text = user.email,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontSize = 30.sp
+                    )
+                Log.d("User",user.toString())
                 Spacer(modifier = Modifier.height(10.dp))
-                Text(text = user.email)
+                Text(text =" ${user.displayName}")
 
                 IconButton(onClick = { onEvent(NotesEvent.SortNotes) }) {
                     Icon(

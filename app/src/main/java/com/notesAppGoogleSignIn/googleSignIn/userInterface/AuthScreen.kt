@@ -1,5 +1,6 @@
 package com.notesAppGoogleSignIn.googleSignIn.userInterface
 
+import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -9,20 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.common.api.ApiException
 import com.notesAppGoogleSignIn.Greeting
-import com.notesAppGoogleSignIn.MainActivity2
 import com.notesAppGoogleSignIn.R
+import com.notesAppGoogleSignIn.googleSignIn.model.User
 import com.notesAppGoogleSignIn.noteApp.userInterface.MainActivity
 import com.notesAppGoogleSignIn.googleSignIn.viewmodel.AuthViewModel
-import com.notesAppGoogleSignIn.noteApp.userInterface.ForwardUserDetails
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import com.notesAppGoogleSignIn.utils.AuthResultContract
-import com.notesAppGoogleSignIn.noteApp.userInterface.NotesViewModel
 
 
 @ExperimentalAnimationApi
@@ -36,6 +35,8 @@ fun AuthScreen(
     var text by remember { mutableStateOf<String?>(null) }
     val user by remember(authViewModel) { authViewModel.user }.collectAsState()
     val signInRequestCode = 1
+
+    val context = LocalContext.current
 
     val viewModel = remember {
         mutableStateOf("")
@@ -73,10 +74,16 @@ fun AuthScreen(
     )
 
     user?.let {
-        //   HomeScreen(user = it)
-        //Greeting(user = it)
+//          HomeScreen(user = it)
+//        Greeting(user = it)
         //        MainActivity(user=it)
-        ForwardUserDetails(user=it)
+        //ForwardUserDetails(user=it)
+        // context.startActivity(Intent(context,MainActivity::class.java))
+        val data = User(it.email, it.displayName)
+        val intent = Intent(context, MainActivity::class.java).apply {
+            putExtra("userDetails", data)
+        }
+        context.startActivity(intent)
     }
 }
 
